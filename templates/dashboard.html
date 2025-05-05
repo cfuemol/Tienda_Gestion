@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Práctica Final</title>
+    <style>
+        table,td,tr,th{
+            border: 2px solid black;
+            border-collapse: collapse;
+        }
+
+        th{
+            background-color: darkgray;
+        }
+
+        table{
+            width: 70%;
+            text-align: center;
+        }
+
+        .stock{
+            font-weight: bold;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>DASHBOARD de {{ tienda }}</h1>
+
+    <p>
+        <h3>Bienvenido al panel de control.</h3>
+
+    <p>
+        <h3>{{ nombre_admin }}, la fecha de hoy es: {{ fecha }}</h3>
+
+    <p>
+        <h3><u>Catálogo de productos registrados en tienda:</u></h3>
+
+        <table>
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Categoría</th>
+                <th>Stock</th>
+            </tr>
+
+            {% for producto in productos %}
+                <tr>
+                    <td>{{ producto['nombre'] }}</td>
+                    <td>{{ producto['precio'] }} €</td>
+                    <td>{{ producto['categoria'] }}</td>
+                    <td>
+                        {% if producto['stock'] > 0 %}
+                            {{ producto['stock'] }}
+                        {% else %}
+                            <span class="stock">Sá gastao</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h4>Hay un total de {{ total_productos }} artículos en stock</h4>
+
+    <p>
+        <h3><u>Lista de clientes registrados en el sistema:</u></h3>
+
+        <table>
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Estado</th>
+                <th>Número de Pedidos</th>
+            </tr>
+
+            {% for cliente in clientes %}
+                <tr>
+                    <td>{{ cliente['nombre'] }}</td>
+                    <td>{{ cliente['email'] }}</td>
+                    <td>
+                        {% if cliente['activo'] %}
+                            Activo
+                        {% else %}
+                            <span class="stock">Inactivo</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ cliente['pedidos'] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h4>En este momento hay {{ active }} clientes activos</h4>
+        <h4>El cliente con más pedidos es -->  {{ mas_pedidos['nombre'] }} con {{ mas_pedidos['cantidad'] }} pedidos realizados
+        hasta la fecha</h4>
+
+    <p>
+        <h3><u>Pedidos recientes:</u></h3>
+
+        <table>
+            <tr>
+                <th>Cliente</th>
+                <th>Total</th>
+                <th>Fecha</th>
+            </tr>
+
+            {% for pedido in pedidos_clientes %}
+                <tr>
+                    <td>{{ pedido['cliente'] }}</td>
+                    <td>{{ pedido['total'] }} €</td>
+                    <td>{{ pedido['fecha'] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h4>El ingreso acumulado por las ventas asciende a --> {{ ingresos | round(2) }} €</h4>
+
+</body>
+</html>
