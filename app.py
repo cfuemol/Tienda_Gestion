@@ -100,7 +100,15 @@ def dashboard():
     # Añadir datos del formulario a la lista de productos de la tienda
 
     if request.method == 'POST':
-        productos.append(request.form)
+        add_product = {}
+
+        form = dict(request.form)
+        add_product['nombre'] = form['nombre'].title()
+        add_product['precio'] = float(form['precio'])
+        add_product['categoria'] = form['categoria'].title()
+        add_product['stock'] = int(form['stock'])
+
+        productos.append(add_product.copy())
 
     return render_template('dashboard.html', **admin,
                            productos=productos, clientes=clientes, pedidos_clientes=pedidos_clientes,

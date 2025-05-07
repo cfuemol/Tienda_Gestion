@@ -53,7 +53,7 @@
                     <td>{{ producto['precio'] }} €</td>
                     <td>{{ producto['categoria'] }}</td>
                     <td>
-                        {% if producto['stock']  &gt  0 %}
+                        {% if producto['stock'] > 0 %}
                             {{ producto['stock'] }}
                         {% else %}
                             <span class="stock">Sá gastao</span>
@@ -124,31 +124,44 @@
         <h2>Introducir nuevos productos a la tienda:</h2>
         
         <form class="add_productos" method="POST">
-            <p>
-                <label for="nombre" class="form_label">Nombre: </label>
-                <input type="text" name="nombre" id="nombre">
-            </p>
+            <table>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Categoría</th>
+                    <th>Stock</th>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="nombre" class="form_label"></label>
+                        <input type="text" name="nombre" id="nombre">
+                    </td>
             
-            <p>
-                <label for="precio" class="form_label">Precio: </label>
-                <input type="number" name="precio" id="precio" value="0,00">
-            </p>
+                    <td>
+                        <label for="precio" class="form_label"></label>
+                        <input type="number" name="precio" id="precio" value="0">
+                    </td>
 
-            <p>
-                <label for="categoria" class="form_label">Categoría: </label>
-                <input type="text" name="categoria" id="categoria">
-            </p>
+                    <td>
+                        <label for="categoria" class="form_label"></label>
+                        <input type="text" name="categoria" id="categoria">
+                    </td>
 
-            <p>
-                <label for="stock" class="form_label">Stock: </label>
-                <input type="number" name="stock" id="stock" value="0">
-            </p>
-                
-            <p>               
-                <button type="submit" class="form_submit">Enviar</button>
-            </p>
+                    <td>
+                        <label for="stock" class="form_label"></label>
+                        <input type="number" name="stock" id="stock" value="0">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="4">
+                        <button type="submit" class="form_submit">Enviar</button>
+                    </td>
+
+                </tr>
+            </table>
         </form>
-        
     </p>
 
 </body>
