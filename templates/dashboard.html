@@ -29,12 +29,15 @@
 
     <p>
         <h3>Bienvenido al panel de control.</h3>
+    </p>
 
     <p>
         <h3>{{ nombre_admin }}, la fecha de hoy es: {{ fecha }}</h3>
+    </p>
 
     <p>
         <h3><u>Catálogo de productos registrados en tienda:</u></h3>
+    </p>
 
         <table>
             <tr>
@@ -50,7 +53,7 @@
                     <td>{{ producto['precio'] }} €</td>
                     <td>{{ producto['categoria'] }}</td>
                     <td>
-                        {% if producto['stock'] > 0 %}
+                        {% if producto['stock']  &gt  0 %}
                             {{ producto['stock'] }}
                         {% else %}
                             <span class="stock">Sá gastao</span>
@@ -61,6 +64,7 @@
         </table>
 
         <h4>Hay un total de {{ total_productos }} artículos en stock</h4>
+    
 
     <p>
         <h3><u>Lista de clientes registrados en el sistema:</u></h3>
@@ -90,8 +94,9 @@
         </table>
 
         <h4>En este momento hay {{ active }} clientes activos</h4>
-        <h4>El cliente con más pedidos es -->  {{ mas_pedidos['nombre'] }} con {{ mas_pedidos['cantidad'] }} pedidos realizados
+        <h4>El cliente con más pedidos es --&gt;  {{ mas_pedidos['nombre'] }} con {{ mas_pedidos['cantidad'] }} pedidos realizados
         hasta la fecha</h4>
+    </p>
 
     <p>
         <h3><u>Pedidos recientes:</u></h3>
@@ -112,7 +117,39 @@
             {% endfor %}
         </table>
 
-        <h4>El ingreso acumulado por las ventas asciende a --> {{ ingresos | round(2) }} €</h4>
+        <h4>El ingreso acumulado por las ventas asciende a --&gt; {{ ingresos | round(2) }} €</h4>
+    </p>
+
+    <p>
+        <h2>Introducir nuevos productos a la tienda:</h2>
+        
+        <form class="add_productos" method="POST">
+            <p>
+                <label for="nombre" class="form_label">Nombre: </label>
+                <input type="text" name="nombre" id="nombre">
+            </p>
+            
+            <p>
+                <label for="precio" class="form_label">Precio: </label>
+                <input type="number" name="precio" id="precio" value="0,00">
+            </p>
+
+            <p>
+                <label for="categoria" class="form_label">Categoría: </label>
+                <input type="text" name="categoria" id="categoria">
+            </p>
+
+            <p>
+                <label for="stock" class="form_label">Stock: </label>
+                <input type="number" name="stock" id="stock" value="0">
+            </p>
+                
+            <p>               
+                <button type="submit" class="form_submit">Enviar</button>
+            </p>
+        </form>
+        
+    </p>
 
 </body>
 </html>

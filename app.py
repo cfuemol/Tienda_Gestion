@@ -1,10 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from datetime import date
 
 app = Flask(__name__)
 
 
-@app.route('/dashboard')
+@app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
     admin = {
         'nombre_admin' : 'Francisco',
@@ -97,6 +97,10 @@ def dashboard():
             mas_pedidos['nombre'] = cliente['nombre']
             mas_pedidos['cantidad'] = cliente['pedidos']
 
+    # Añadir datos del formulario a la lista de productos de la tienda
+
+    if request.method == 'POST':
+        productos.append(request.form)
 
     return render_template('dashboard.html', **admin,
                            productos=productos, clientes=clientes, pedidos_clientes=pedidos_clientes,
