@@ -22,6 +22,12 @@
             font-weight: bold;
             color: red;
         }
+
+        .resalto{
+            font-weight: bold;
+            background-color: darkgrey;
+        }
+
     </style>
 </head>
 <body>
@@ -91,6 +97,14 @@
                     <td>{{ cliente['pedidos'] }}</td>
                 </tr>
             {% endfor %}
+
+                <tr class="resalto">
+                    <td colspan="4">Ahora hay {{ active }} usuarios conectados</td>
+                </tr>
+
+                <tr class="resalto">
+                    <td colspan="4">Cliente con más compras: {{ mas_pedidos['nombre'] }} con {{ mas_pedidos['cantidad'] }} productos</td>
+                </tr>
         </table>
 
         <h4>En este momento hay {{ active }} clientes activos</h4>
@@ -115,9 +129,13 @@
                     <td>{{ pedido['fecha'] }}</td>
                 </tr>
             {% endfor %}
+
+                <tr>
+                    <td class="resalto">Total Ganado</td>
+                    <td colspan="3" class="resalto"> {{ ingresos | round(2) }} €</td>
+                </tr>
         </table>
 
-        <h4>El ingreso acumulado por las ventas asciende a --&gt; {{ ingresos | round(2) }} €</h4>
     </p>
 
     <p>
@@ -140,7 +158,7 @@
             
                     <td>
                         <label for="precio" class="form_label"></label>
-                        <input type="number" name="precio" id="precio" value="0">
+                        <input type="number" name="precio" step="0.01" id="precio" value="0">
                     </td>
 
                     <td>
