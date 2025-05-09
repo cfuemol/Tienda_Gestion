@@ -1,15 +1,20 @@
 from flask import Flask, render_template, request
 from datetime import date
+from pymongo import MongoClient
 
 app = Flask(__name__)
+cliente = MongoClient('mongodb+srv://cfuemol584:SPgHlmWg5fG2eOgR@flaskmongodb.haghvj1.mongodb.net/?tls=true')
+app.db = cliente.Tienda_Gestion
+
+productos = [producto for producto in app.db.productos.find({})]
 
 # Productos va a ser una lista global para que no se reinicie en cada iteración del formulario
 
-productos = [
-        {'nombre' : 'Teclado mecánico', 'precio' : 45.00, 'categoria' : 'Periféricos', 'stock' : 5},
-        {'nombre': 'Monitor 24\"', 'precio' : 120.99, 'categoria' : 'Monitores', 'stock' : 2},
-        {'nombre': 'Webcam HD', 'precio': 39.90, 'categoria' : 'Periféricos', 'stock': 0}
-    ]
+##productos = [
+##        {'nombre' : 'Teclado mecánico', 'precio' : 45.00, 'categoria' : 'Periféricos', 'stock' : 5},
+##        {'nombre': 'Monitor 24\"', 'precio' : 120.99, 'categoria' : 'Monitores', 'stock' : 2},
+##        {'nombre': 'Webcam HD', 'precio': 39.90, 'categoria' : 'Periféricos', 'stock': 0}
+##    ]
 
 
 @app.route('/dashboard', methods=['GET', 'POST'])
