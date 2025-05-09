@@ -55,12 +55,12 @@
 
             {% for producto in productos %}
                 <tr>
-                    <td>{{ producto['nombre'] }}</td>
-                    <td>{{ producto['precio'] }} €</td>
-                    <td>{{ producto['categoria'] }}</td>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.precio }} €</td>
+                    <td>{{ producto.categoria }}</td>
                     <td>
-                        {% if producto['stock'] > 0 %}
-                            {{ producto['stock'] }}
+                        {% if producto.stock > 0 %}
+                            {{ producto.stock }}
                         {% else %}
                             <span class="stock">Sá gastao</span>
                         {% endif %}

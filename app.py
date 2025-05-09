@@ -8,6 +8,8 @@ app.db = cliente.Tienda_Gestion
 
 productos = [producto for producto in app.db.productos.find({})]
 
+print(productos)
+
 # Productos va a ser una lista global para que no se reinicie en cada iteración del formulario
 
 ##productos = [
@@ -24,8 +26,6 @@ def dashboard():
         'tienda' : 'TecnoMarket',
         'fecha' : date.today()
     }
-
-    global productos
 
     clientes = [
         {'nombre' : 'Ana', 'email' : 'ana@mail.com', 'activo' : True, 'pedidos' : 12},
@@ -117,7 +117,8 @@ def dashboard():
         add_product['categoria'] = form['categoria'].title()
         add_product['stock'] = int(form['stock'])
 
-        productos.append(add_product.copy())
+        productos.append(add_product)
+        app.db.productos.insert_one(add_product)
 
     return render_template('dashboard.html', **admin,
                            productos=productos, clientes=clientes, pedidos_clientes=pedidos_clientes,
