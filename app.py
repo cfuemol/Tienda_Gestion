@@ -10,15 +10,6 @@ productos = [producto for producto in app.db.productos.find({})]
 
 print(productos)
 
-# Productos va a ser una lista global para que no se reinicie en cada iteración del formulario
-
-##productos = [
-##        {'nombre' : 'Teclado mecánico', 'precio' : 45.00, 'categoria' : 'Periféricos', 'stock' : 5},
-##        {'nombre': 'Monitor 24\"', 'precio' : 120.99, 'categoria' : 'Monitores', 'stock' : 2},
-##        {'nombre': 'Webcam HD', 'precio': 39.90, 'categoria' : 'Periféricos', 'stock': 0}
-##    ,]
-
-
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
     admin = {
