@@ -7,8 +7,9 @@ cliente = MongoClient('mongodb+srv://cfuemol584:SPgHlmWg5fG2eOgR@flaskmongodb.ha
 app.db = cliente.Tienda_Gestion
 
 productos = [producto for producto in app.db.productos.find({})]
+clientes = [cliente for clientes in app.db.clientes.find({})]
 
-#print(productos)
+        #### END-POINTS ####
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
@@ -17,13 +18,6 @@ def dashboard():
         'tienda' : 'TecnoMarket',
         'fecha' : date.today()
     }
-
-    clientes = [
-        {'nombre' : 'Ana', 'email' : 'ana@mail.com', 'activo' : True, 'pedidos' : 12},
-        {'nombre' : 'Luis', 'email' : 'luis@mail.com', 'activo' : False, 'pedidos' : 3},
-        {'nombre' : 'Carmen', 'email' : 'carmen@mail.com', 'activo' : True, 'pedidos' : 7},
-        {'nombre' : 'Pedro', 'email' : 'pedro@mail.com', 'activo' : True, 'pedidos' : 10}
-    ]
 
     pedidos_clientes = [
         # Pedidos de Ana
@@ -111,6 +105,20 @@ def dashboard():
         productos.append(add_product)
         app.db.productos.insert_one(add_product)
 
+    # Añadir clientes mediante formulario
+
+    if request.method == 'POST':
+        add_client = {}
+
+        client = dict(request.form)
+        add_client['nombre'] = client['nombre_cliente'].title()
+        add_client['email'] = client['email_cliente'].lower()
+        add_client['estado'] = False
+        add_client['pedidos'] = 0
+
+        clientes.append(add_client)
+        app.db.clientes.insert_one(add_client)
+
     return render_template('dashboard.html', **admin,
                            productos=productos, clientes=clientes, pedidos_clientes=pedidos_clientes,
                            ingresos=ingresos, total_productos=total_productos,
@@ -118,3 +126,35 @@ def dashboard():
 
 if __name__ == '__main__':
     app.run()
+
+
+"""
+    --- UTILIZAR MÚLTIPLES FORMULARIOS ---
+@app.route('/gestion', methods=['GET', 'POST'])
+def gestion():
+    if request.method == 'POST':
+        form_type = request.form.get('form_type')
+        if form_type == 'producto':
+            # Procesar el formulario de producto
+            add_product = {
+                'nombre': request.form['nombre'].title(),
+                'precio': float(request.form['precio']),
+                'categoria': request.form['categoria'].title(),
+                'stock': int(request.form['stock'])
+            }
+            productos.append(add_product)
+            app.db.productos.insert_one(add_product)
+            flash('Producto añadido correctamente.')
+        elif form_type == 'cliente':
+            # Procesar el formulario de cliente
+            add_client = {
+                'nombre': request.form['nombre_cliente'].title(),
+                'email': request.form['email_cliente'].lower(),
+                'estado': False,
+                'pedidos': 0
+            }
+            clientes.append(add_client)
+            app.db.clientes.insert_one(add_client)
+            flash('Cliente añadido correctamente.')
+    return render_template('gestion.html')
+"""
