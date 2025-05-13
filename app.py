@@ -8,7 +8,7 @@ app.db = cliente.Tienda_Gestion
 
 productos = [producto for producto in app.db.productos.find({})]
 
-print(productos)
+#print(productos)
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
