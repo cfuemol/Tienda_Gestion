@@ -123,46 +123,15 @@
             </li>
         </ul>
 
-        <form class="add_productos" method="POST">
-                    <table>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Email</th>
-                            <th>Estado</th>
-                            <th>Número de Pedidos</th>
-                        </tr>
+        <h2>Introducir nuevos clientes a la tienda:</h2>
 
-                        <tr>
-                            <td>
-                                <label for="nombre_cliente" class="form_label"></label>
-                                <input type="text" name="nombre_cliente" id="nombre_cliente">
-                            </td>
+        <ul>
+            <li>Añadir un cliente nuevo
+                <a href="#modal_addclient" class="addclient"> Agregar Cliente</a>
+            </li>
+        </ul>
 
-                            <td>
-                                <label for="email_cliente" class="form_label"></label>
-                                <input type="email" name="email_cliente" id="email_cliente">
-                            </td>
 
-                            <td>
-                                <label for="estado_cliente" class="form_label"></label>
-                                <input type="text" name="estado_cliente" id="estado_cliente">
-                            </td>
-
-                            <td>
-                                <label for="pedidos_cliente" class="form_label"></label>
-                                <input type="number" name="pedidos_cliente" id="pedidos_cliente" value="0">
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="4">
-                                <button type="submit" class="form_submit">Enviar</button>
-                            </td>
-
-                        </tr>
-
-                    </table>
-                </form>
 
         <!-- Modal para introducir productos -->
 
@@ -170,6 +139,7 @@
             <div>
                 <a href="#" class="close">X</a>
                 <form class="add_productos" method="POST">
+                    <input type="hidden" name="form_type" value="producto">
                     <table>
                         <tr>
                             <th>Nombre</th>
@@ -210,6 +180,45 @@
                     </table>
                 </form>
 
+            </div>
+        </div>
+
+            <!-- Modal para introducir clientes -->
+
+            <div id="modal_addclient" class="modalDialog">
+                <div>
+                    <a href="#" class="close">X</a>
+                    <h2>Agregar clientes</h2>
+                    <form class="add_clientes" method="POST">
+                    <input type="hidden" name="form_type" value="cliente">
+                    <table>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label for="nombre_cliente" class="form_label"></label>
+                                <input type="text" name="nombre_cliente" id="nombre_cliente">
+                            </td>
+
+                            <td>
+                                <label for="email_cliente" class="form_label"></label>
+                                <input type="email" name="email_cliente" id="email_cliente">
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td colspan="2">
+                                <button type="submit" class="form_submit">Enviar</button>
+                            </td>
+                        </tr>
+
+                        </table>
+                    </form>
+                </div>
             </div>
 
         </div>

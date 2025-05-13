@@ -1,71 +1,71 @@
-        table,td,tr,th{
-            border: 2px solid black;
-            border-collapse: collapse;
-        }
+table,td,tr,th {
+    border: 2px solid black;
+    border-collapse: collapse;
+}
 
-        th{
-            background-color: darkgray;
-        }
+th{
+    background-color: darkgray;
+}
 
-        table{
-            width: 70%;
-            text-align: center;
-        }
+table{
+    width: 70%;
+    text-align: center;
+}
 
-        .stock{
-            font-weight: bold;
-            color: red;
-        }
+.stock{
+    font-weight: bold;
+    color: red;
+}
 
-        .resalto{
-            font-weight: bold;
-            background-color: darkgrey;
-        }
+.resalto{
+    font-weight: bold;
+    background-color: darkgrey;
+}
 
         /* Estilos básicos del modal */
-    .modalDialog {
-        position: fixed;
-        font-family: Arial, sans-serif;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        background: rgba(0,0,0,0.8);
-        z-index: 99999;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-    }
+.modalDialog {
+    position: fixed;
+    font-family: Arial, sans-serif;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
 
-    .modalDialog:target {
-        opacity: 1;
-        pointer-events: auto;
-    }
+.modalDialog:target {
+    opacity: 1;
+    pointer-events: auto;
+}
 
-    .modalDialog > div {
-        width: 60%;
-        margin: 10% auto;
-        padding: 20px;
-        background: #fff;
-        border-radius: 10px;
-        position: relative;
-    }
+.modalDialog > div {
+    width: 60%;
+    margin: 10% auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    position: relative;
+}
 
     /* Botón para cerrar */
-    .close {
-        background: #f44336;
-        color: white;
-        line-height: 25px;
-        position: absolute;
-        right: 10px;
-        text-align: center;
-        top: 10px;
-        width: 25px;
-        text-decoration: none;
-        font-weight: bold;
-        border-radius: 50%;
-    }
+.close {
+    background: #f44336;
+    color: white;
+    line-height: 25px;
+    position: absolute;
+    right: 10px;
+    text-align: center;
+    top: 10px;
+    width: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 50%;
+}
 
-    .close:hover {
-        background: #d32f2f;
-    }
+.close:hover {
+    background: #d32f2f;
+}

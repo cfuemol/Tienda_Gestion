@@ -94,30 +94,35 @@ def dashboard():
     # Añadir datos del formulario a la lista de productos de la tienda
 
     if request.method == 'POST':
-        add_product = {}
 
-        form = dict(request.form)
-        add_product['nombre'] = form['nombre'].title()
-        add_product['precio'] = float(form['precio'])
-        add_product['categoria'] = form['categoria'].title()
-        add_product['stock'] = int(form['stock'])
+        form_type = request.form.get('form_type')
 
-        productos.append(add_product)
-        app.db.productos.insert_one(add_product)
+        if form_type == 'producto':
+            add_product = {}
 
-    # Añadir clientes mediante formulario
+            form = dict(request.form)
+            add_product['nombre'] = form['nombre'].title()
+            add_product['precio'] = float(form['precio'])
+            add_product['categoria'] = form['categoria'].title()
+            add_product['stock'] = int(form['stock'])
 
-    if request.method == 'POST':
-        add_client = {}
+            productos.append(add_product)
+            app.db.productos.insert_one(add_product)
 
-        client = dict(request.form)
-        add_client['nombre'] = client['nombre_cliente'].title()
-        add_client['email'] = client['email_cliente'].lower()
-        add_client['estado'] = False
-        add_client['pedidos'] = 0
+            # Añadir clientes mediante formulario
 
-        clientes.append(add_client)
-        app.db.clientes.insert_one(add_client)
+        elif form_type == 'cliente':
+
+            add_client = {}
+
+            client = dict(request.form)
+            add_client['nombre'] = client['nombre_cliente'].title()
+            add_client['email'] = client['email_cliente'].lower()
+            add_client['estado'] = False
+            add_client['pedidos'] = 0
+
+            clientes.append(add_client)
+            app.db.clientes.insert_one(add_client)
 
     return render_template('dashboard.html', **admin,
                            productos=productos, clientes=clientes, pedidos_clientes=pedidos_clientes,
