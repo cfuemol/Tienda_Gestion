@@ -4,14 +4,11 @@
 
 {% block content %}
 
-        <h1>DASHBOARD de {{ tienda }}</h1>
-        <h3>Bienvenido al panel de control.</h3>
-        <h3>{{ nombre_admin }}, la fecha de hoy es: {{ fecha }}</h3>
+        <p>Bienvenido al panel de control de la tienda {{ tienda }}</p>
+        <p>{{ nombre_admin }}, la fecha de hoy es: {{ fecha }}</p>
 
 
         <h3><u>Catálogo de productos registrados en tienda:</u></h3>
-
-
             <table>
                 <tr>
                     <th>Producto</th>
@@ -74,7 +71,6 @@
                     </tr>
             </table>
 
-            <h4>En este momento hay {{ active }} clientes activos</h4>
             <h4>El cliente con más pedidos es --&gt;  {{ mas_pedidos['nombre'] }} con {{ mas_pedidos['cantidad'] }} pedidos realizados
             hasta la fecha</h4>
         </p>
@@ -106,13 +102,6 @@
         </p>
 
         <p>
-            <h2>Introducir nuevos productos a la tienda:</h2>
-
-            <ul>
-                <li>Añadir un producto nuevo
-                    <a href="#modal_addproduct" class="addproduct"> [Pulsa aquí]</a>
-                </li>
-            </ul>
 
             <h2>Introducir nuevos clientes a la tienda:</h2>
 
@@ -123,56 +112,6 @@
             </ul>
 
 
-
-            <!-- Modal para introducir productos -->
-
-            <div id="modal_addproduct" class="modalDialog">
-                <div>
-                    <a href="#" class="close">X</a>
-                    <form class="add_productos" method="POST">
-                        <input type="hidden" name="form_type" value="producto">
-                        <table>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Precio</th>
-                                <th>Categoría</th>
-                                <th>Stock</th>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <label for="nombre" class="form_label"></label>
-                                    <input type="text" name="nombre" id="nombre">
-                                </td>
-
-                                <td>
-                                    <label for="precio" class="form_label"></label>
-                                    <input type="number" name="precio" step="0.01" id="precio" value="0">
-                                </td>
-
-                                <td>
-                                    <label for="categoria" class="form_label"></label>
-                                    <input type="text" name="categoria" id="categoria">
-                                </td>
-
-                                <td>
-                                    <label for="stock" class="form_label"></label>
-                                    <input type="number" name="stock" id="stock" value="0">
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td colspan="4">
-                                    <button type="submit" class="form_submit">Enviar</button>
-                                </td>
-
-                            </tr>
-
-                        </table>
-                    </form>
-
-                </div>
-            </div>
 
                 <!-- Modal para introducir clientes -->
 

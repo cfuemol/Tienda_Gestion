@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from datetime import date
 from pymongo import MongoClient
 
@@ -7,7 +7,7 @@ cliente = MongoClient('mongodb+srv://cfuemol584:SPgHlmWg5fG2eOgR@flaskmongodb.ha
 app.db = cliente.Tienda_Gestion
 
 productos = [producto for producto in app.db.productos.find({})]
-clientes = [cliente for clientes in app.db.clientes.find({})]
+clientes = [cliente for cliente in app.db.clientes.find({})]
 
         #### END-POINTS ####
 
@@ -84,7 +84,7 @@ def dashboard():
     }
 
     for cliente in clientes:
-        if cliente['activo']:
+        if cliente['estado']:
             active +=1
 
         if cliente['pedidos'] > mas_pedidos['cantidad']:
@@ -92,26 +92,6 @@ def dashboard():
             mas_pedidos['cantidad'] = cliente['pedidos']
 
     # Añadir datos del formulario a la lista de productos de la tienda
-
-    if request.method == 'POST':
-
-        form_type = request.form.get('form_type')
-
-        if form_type == 'producto':
-            add_product = {}
-
-            form = dict(request.form)
-            add_product['nombre'] = form['nombre'].title()
-            add_product['precio'] = float(form['precio'])
-            add_product['categoria'] = form['categoria'].title()
-            add_product['stock'] = int(form['stock'])
-
-            productos.append(add_product)
-            app.db.productos.insert_one(add_product)
-
-            # Añadir clientes mediante formulario
-
-        elif form_type == 'cliente':
 
             add_client = {}
 
@@ -129,6 +109,44 @@ def dashboard():
                            ingresos=ingresos, total_productos=total_productos,
                            active=active, mas_pedidos=mas_pedidos)
 
+@app.route('/add_producto', methods=['GET', 'POST'])
+def add_producto():
+    mensaje = ''
+
+    if request.method == 'POST':
+
+        nombre = request.form['nombre'].title()
+        precio = float(request.form['precio'])
+        categoria = request.form['categoria'].title()
+        stock = int(request.form['stock'])
+
+        app.db.productos.insert_one({
+            'nombre': nombre,
+            'precio': precio,
+            'categoria': categoria,
+            'stock': stock,
+        })
+        mensaje = f'El producto {nombre} ha sido añadido correctamente.'
+
+
+    return render_template('add_producto.html', mensaje=mensaje)
+
+@app.route('/lista_productos', methods=['GET', 'POST'])
+def lista_productos():
+    return render_template('lista_productos.html', productos=productos)
+
+@app.route('/productos/<id_producto>', methods=['GET', 'POST'])
+def producto(id_producto):
+    product_found = None
+    for producto in productos:
+        if producto[0] == id_producto:
+            product_found = producto
+            break
+
+    if product_found:
+        return render_template('detalle_producto.html', producto=product_found)
+    else:
+        return render_template('404.html')
 ## Crear los endpoints a la misma vez que las webs
 # correspondientes y en el nav##
 
