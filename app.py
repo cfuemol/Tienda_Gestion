@@ -129,37 +129,9 @@ def dashboard():
                            ingresos=ingresos, total_productos=total_productos,
                            active=active, mas_pedidos=mas_pedidos)
 
+## Crear los endpoints a la misma vez que las webs
+# correspondientes y en el nav##
+
+
 if __name__ == '__main__':
     app.run()
-
-
-"""
-    --- UTILIZAR MÚLTIPLES FORMULARIOS ---
-@app.route('/gestion', methods=['GET', 'POST'])
-def gestion():
-    if request.method == 'POST':
-        form_type = request.form.get('form_type')
-        if form_type == 'producto':
-            # Procesar el formulario de producto
-            add_product = {
-                'nombre': request.form['nombre'].title(),
-                'precio': float(request.form['precio']),
-                'categoria': request.form['categoria'].title(),
-                'stock': int(request.form['stock'])
-            }
-            productos.append(add_product)
-            app.db.productos.insert_one(add_product)
-            flash('Producto añadido correctamente.')
-        elif form_type == 'cliente':
-            # Procesar el formulario de cliente
-            add_client = {
-                'nombre': request.form['nombre_cliente'].title(),
-                'email': request.form['email_cliente'].lower(),
-                'estado': False,
-                'pedidos': 0
-            }
-            clientes.append(add_client)
-            app.db.clientes.insert_one(add_client)
-            flash('Cliente añadido correctamente.')
-    return render_template('gestion.html')
-"""

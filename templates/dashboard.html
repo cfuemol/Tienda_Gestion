@@ -1,229 +1,219 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Práctica Final</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% extends 'base.html' %}
+{% block title %} Flask - Dashboard {% endblock %}
 
-</head>
-<body>
-    <h1>DASHBOARD de {{ tienda }}</h1>
 
-    <p>
+{% block content %}
+
+        <h1>DASHBOARD de {{ tienda }}</h1>
         <h3>Bienvenido al panel de control.</h3>
-    </p>
-
-    <p>
         <h3>{{ nombre_admin }}, la fecha de hoy es: {{ fecha }}</h3>
-    </p>
 
-    <p>
+
         <h3><u>Catálogo de productos registrados en tienda:</u></h3>
-    </p>
 
-        <table>
-            <tr>
-                <th>Producto</th>
-                <th>Precio</th>
-                <th>Categoría</th>
-                <th>Stock</th>
-            </tr>
 
-            {% for producto in productos %}
+            <table>
                 <tr>
-                    <td>{{ producto.nombre }}</td>
-                    <td>{{ producto.precio }} €</td>
-                    <td>{{ producto.categoria }}</td>
-                    <td>
-                        {% if producto.stock > 0 %}
-                            {{ producto.stock }}
-                        {% else %}
-                            <span class="stock">Sá gastao</span>
-                        {% endif %}
-                    </td>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Categoría</th>
+                    <th>Stock</th>
                 </tr>
-            {% endfor %}
-        </table>
 
-        <h4>Hay un total de {{ total_productos }} artículos en stock</h4>
-    
+                {% for producto in productos %}
+                    <tr>
+                        <td>{{ producto.nombre }}</td>
+                        <td>{{ producto.precio }} €</td>
+                        <td>{{ producto.categoria }}</td>
+                        <td>
+                            {% if producto.stock > 0 %}
+                                {{ producto.stock }}
+                            {% else %}
+                                <span class="stock">Sá gastao</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
 
-    <p>
-        <h3><u>Lista de clientes registrados en el sistema:</u></h3>
+            <h4>Hay un total de {{ total_productos }} artículos en stock</h4>
 
-        <table>
-            <tr>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Estado</th>
-                <th>Número de Pedidos</th>
-            </tr>
 
-            {% for cliente in clientes %}
+        <p>
+            <h3><u>Lista de clientes registrados en el sistema:</u></h3>
+
+            <table>
                 <tr>
-                    <td>{{ cliente['nombre'] }}</td>
-                    <td>{{ cliente['email'] }}</td>
-                    <td>
-                        {% if cliente['activo'] %}
-                            Activo
-                        {% else %}
-                            <span class="stock">Inactivo</span>
-                        {% endif %}
-                    </td>
-                    <td>{{ cliente['pedidos'] }}</td>
-                </tr>
-            {% endfor %}
-
-                <tr class="resalto">
-                    <td colspan="4">Ahora hay {{ active }} usuarios conectados</td>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Estado</th>
+                    <th>Número de Pedidos</th>
                 </tr>
 
-                <tr class="resalto">
-                    <td colspan="4">Cliente con más compras: {{ mas_pedidos['nombre'] }} con {{ mas_pedidos['cantidad'] }} productos</td>
-                </tr>
-        </table>
+                {% for cliente in clientes %}
+                    <tr>
+                        <td>{{ cliente['nombre'] }}</td>
+                        <td>{{ cliente['email'] }}</td>
+                        <td>
+                            {% if cliente['activo'] %}
+                                Activo
+                            {% else %}
+                                <span class="stock">Inactivo</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ cliente['pedidos'] }}</td>
+                    </tr>
+                {% endfor %}
 
-        <h4>En este momento hay {{ active }} clientes activos</h4>
-        <h4>El cliente con más pedidos es --&gt;  {{ mas_pedidos['nombre'] }} con {{ mas_pedidos['cantidad'] }} pedidos realizados
-        hasta la fecha</h4>
-    </p>
+                    <tr class="resalto">
+                        <td colspan="4">Ahora hay {{ active }} usuarios conectados</td>
+                    </tr>
 
-    <p>
-        <h3><u>Pedidos recientes:</u></h3>
+                    <tr class="resalto">
+                        <td colspan="4">Cliente con más compras: {{ mas_pedidos['nombre'] }} con {{ mas_pedidos['cantidad'] }} productos</td>
+                    </tr>
+            </table>
 
-        <table>
-            <tr>
-                <th>Cliente</th>
-                <th>Total</th>
-                <th>Fecha</th>
-            </tr>
+            <h4>En este momento hay {{ active }} clientes activos</h4>
+            <h4>El cliente con más pedidos es --&gt;  {{ mas_pedidos['nombre'] }} con {{ mas_pedidos['cantidad'] }} pedidos realizados
+            hasta la fecha</h4>
+        </p>
 
-            {% for pedido in pedidos_clientes %}
+        <p>
+            <h3><u>Pedidos recientes:</u></h3>
+
+            <table>
                 <tr>
-                    <td>{{ pedido['cliente'] }}</td>
-                    <td>{{ pedido['total'] }} €</td>
-                    <td>{{ pedido['fecha'] }}</td>
+                    <th>Cliente</th>
+                    <th>Total</th>
+                    <th>Fecha</th>
                 </tr>
-            {% endfor %}
 
-                <tr>
-                    <td class="resalto">Total Ganado</td>
-                    <td colspan="3" class="resalto"> {{ ingresos | round(2) }} €</td>
-                </tr>
-        </table>
+                {% for pedido in pedidos_clientes %}
+                    <tr>
+                        <td>{{ pedido['cliente'] }}</td>
+                        <td>{{ pedido['total'] }} €</td>
+                        <td>{{ pedido['fecha'] }}</td>
+                    </tr>
+                {% endfor %}
 
-    </p>
+                    <tr>
+                        <td class="resalto">Total Ganado</td>
+                        <td colspan="3" class="resalto"> {{ ingresos | round(2) }} €</td>
+                    </tr>
+            </table>
 
-    <p>
-        <h2>Introducir nuevos productos a la tienda:</h2>
-        
-        <ul>
-            <li>Añadir un producto nuevo
-                <a href="#modal_addproduct" class="addproduct"> [Pulsa aquí]</a>
-            </li>
-        </ul>
+        </p>
 
-        <h2>Introducir nuevos clientes a la tienda:</h2>
+        <p>
+            <h2>Introducir nuevos productos a la tienda:</h2>
 
-        <ul>
-            <li>Añadir un cliente nuevo
-                <a href="#modal_addclient" class="addclient"> Agregar Cliente</a>
-            </li>
-        </ul>
+            <ul>
+                <li>Añadir un producto nuevo
+                    <a href="#modal_addproduct" class="addproduct"> [Pulsa aquí]</a>
+                </li>
+            </ul>
+
+            <h2>Introducir nuevos clientes a la tienda:</h2>
+
+            <ul>
+                <li>Añadir un cliente nuevo
+                    <a href="#modal_addclient" class="addclient"> Agregar Cliente</a>
+                </li>
+            </ul>
 
 
 
-        <!-- Modal para introducir productos -->
+            <!-- Modal para introducir productos -->
 
-        <div id="modal_addproduct" class="modalDialog">
-            <div>
-                <a href="#" class="close">X</a>
-                <form class="add_productos" method="POST">
-                    <input type="hidden" name="form_type" value="producto">
-                    <table>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Precio</th>
-                            <th>Categoría</th>
-                            <th>Stock</th>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <label for="nombre" class="form_label"></label>
-                                <input type="text" name="nombre" id="nombre">
-                            </td>
-
-                            <td>
-                                <label for="precio" class="form_label"></label>
-                                <input type="number" name="precio" step="0.01" id="precio" value="0">
-                            </td>
-
-                            <td>
-                                <label for="categoria" class="form_label"></label>
-                                <input type="text" name="categoria" id="categoria">
-                            </td>
-
-                            <td>
-                                <label for="stock" class="form_label"></label>
-                                <input type="number" name="stock" id="stock" value="0">
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="4">
-                                <button type="submit" class="form_submit">Enviar</button>
-                            </td>
-
-                        </tr>
-
-                    </table>
-                </form>
-
-            </div>
-        </div>
-
-            <!-- Modal para introducir clientes -->
-
-            <div id="modal_addclient" class="modalDialog">
+            <div id="modal_addproduct" class="modalDialog">
                 <div>
                     <a href="#" class="close">X</a>
-                    <h2>Agregar clientes</h2>
-                    <form class="add_clientes" method="POST">
-                    <input type="hidden" name="form_type" value="cliente">
-                    <table>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Email</th>
-                        </tr>
+                    <form class="add_productos" method="POST">
+                        <input type="hidden" name="form_type" value="producto">
+                        <table>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Precio</th>
+                                <th>Categoría</th>
+                                <th>Stock</th>
+                            </tr>
 
-                        <tr>
-                            <td>
-                                <label for="nombre_cliente" class="form_label"></label>
-                                <input type="text" name="nombre_cliente" id="nombre_cliente">
-                            </td>
+                            <tr>
+                                <td>
+                                    <label for="nombre" class="form_label"></label>
+                                    <input type="text" name="nombre" id="nombre">
+                                </td>
 
-                            <td>
-                                <label for="email_cliente" class="form_label"></label>
-                                <input type="email" name="email_cliente" id="email_cliente">
-                            </td>
+                                <td>
+                                    <label for="precio" class="form_label"></label>
+                                    <input type="number" name="precio" step="0.01" id="precio" value="0">
+                                </td>
 
-                        </tr>
+                                <td>
+                                    <label for="categoria" class="form_label"></label>
+                                    <input type="text" name="categoria" id="categoria">
+                                </td>
 
-                        <tr>
-                            <td colspan="2">
-                                <button type="submit" class="form_submit">Enviar</button>
-                            </td>
-                        </tr>
+                                <td>
+                                    <label for="stock" class="form_label"></label>
+                                    <input type="number" name="stock" id="stock" value="0">
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="4">
+                                    <button type="submit" class="form_submit">Enviar</button>
+                                </td>
+
+                            </tr>
 
                         </table>
                     </form>
+
                 </div>
             </div>
 
-        </div>
+                <!-- Modal para introducir clientes -->
 
-    </p>
+                <div id="modal_addclient" class="modalDialog">
+                    <div>
+                        <a href="#" class="close">X</a>
+                        <h2>Agregar clientes</h2>
+                        <form class="add_clientes" method="POST">
+                        <input type="hidden" name="form_type" value="cliente">
+                        <table>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                            </tr>
 
-</body>
-</html>
+                            <tr>
+                                <td>
+                                    <label for="nombre_cliente" class="form_label"></label>
+                                    <input type="text" name="nombre_cliente" id="nombre_cliente">
+                                </td>
+
+                                <td>
+                                    <label for="email_cliente" class="form_label"></label>
+                                    <input type="email" name="email_cliente" id="email_cliente">
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <button type="submit" class="form_submit">Enviar</button>
+                                </td>
+                            </tr>
+
+                            </table>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </p>
+{% endblock %}
+
