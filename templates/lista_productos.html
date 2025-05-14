@@ -1,10 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %} Flask - List Products {% endblock %}
 
-</body>
-</html>
+{% block content %}
+    <div class="title">
+        Catálogo de productos registrados
+    </div>
+
+    <div>
+        <table>
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Categoría</th>
+                <th>Stock</th>
+            </tr>
+
+            {% for producto in productos %}
+                <tr>
+                    <td>
+                        <a href="{{ url_for('detalle_producto', producto=producto.nombre) }}">
+                            {{ producto.nombre }}
+                        </a>
+                    </td>
+                    <td>{{ producto.precio }} €</td>
+                    <td>{{ producto.categoria }}</td>
+                    <td>
+                        {% if producto.stock > 0 %}
+                            {{ producto.stock }}
+                        {% else %}
+                            <span class="stock">Sá gastao</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

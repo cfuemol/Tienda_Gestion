@@ -1,10 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %} Flask - Add Products {% endblock %}
 
-</body>
-</html>
+{% block content %}
+    <div>Formulario para añadir productos</div>
+
+    {% if mensaje %}
+        <div class="mensaje"   style="background: #d4edda; color: #155724; padding: 1em; margin-top: 1em; border: 1px solid #c3e6cb;">
+            {{ mensaje }}
+        </div>
+    {% endif %}
+
+    <div>
+        <form class="add_productos" method="POST">
+            <table>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Categoría</th>
+                    <th>Stock</th>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="nombre" class="form_label"></label>
+                        <input type="text" name="nombre" id="nombre" required>
+                    </td>
+
+                    <td>
+                        <label for="precio" class="form_label"></label>
+                        <input type="number" name="precio" step="0.01" id="precio" value="0" required>
+                    </td>
+
+                    <td>
+                        <label for="categoria" class="form_label"></label>
+                        <input type="text" name="categoria" id="categoria" required>
+                    </td>
+
+                    <td>
+                        <label for="stock" class="form_label"></label>
+                        <input type="number" name="stock" id="stock" value="0" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="4">
+                        <button type="submit" class="form_submit">Enviar</button>
+                    </td>
+
+                </tr>
+
+            </table>
+        </form>
+    </div>
+{% endblock %}
