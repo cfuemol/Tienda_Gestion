@@ -7,6 +7,7 @@ cliente = MongoClient('mongodb+srv://cfuemol584:SPgHlmWg5fG2eOgR@flaskmongodb.ha
 app.db = cliente.Tienda_Gestion
 
 productos = [producto for producto in app.db.productos.find({})]
+print(type(productos))
 clientes = [cliente for cliente in app.db.clientes.find({})]
 
         #### END-POINTS ####
@@ -133,20 +134,27 @@ def add_producto():
 
 @app.route('/lista_productos', methods=['GET', 'POST'])
 def lista_productos():
-    return render_template('lista_productos.html', productos=productos)
+    return render_template('lista_productos.html', lista_productos=productos)
 
-@app.route('/productos/<id_producto>', methods=['GET', 'POST'])
+@app.route('/lista_productos/<string:id_producto>', methods=['GET', 'POST'])
 def producto(id_producto):
     product_found = None
-    for producto in productos:
-        if producto[0] == id_producto:
-            product_found = producto
+    id_producto = id_producto.title()
+
+    for buscar in productos:
+        print(buscar['nombre'])
+        print(producto)
+        if buscar['nombre'] == id_producto:
+            product_found = id_producto
             break
 
+    print(product_found)
+
     if product_found:
-        return render_template('detalle_producto.html', producto=product_found)
+        return render_template('detalle_producto.html', id_producto=product_found)
     else:
         return render_template('404.html')
+
 ## Crear los endpoints a la misma vez que las webs
 # correspondientes y en el nav##
 

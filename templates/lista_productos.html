@@ -15,12 +15,12 @@
                 <th>Stock</th>
             </tr>
 
-            {% for producto in productos %}
+            {% for producto in lista_productos %}
                 <tr>
                     <td>
-                        <a href="{{ url_for('detalle_producto', producto=producto.nombre) }}">
-                            {{ producto.nombre }}
-                        </a>
+                        <a href="{{ url_for('detalle_producto', id_producto=producto) }}">
+                        {{ producto.nombre }}
+
                     </td>
                     <td>{{ producto.precio }} €</td>
                     <td>{{ producto.categoria }}</td>
