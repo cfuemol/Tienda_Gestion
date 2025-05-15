@@ -1,79 +1,51 @@
 from flask import Flask, render_template, request
-from datetime import date
+from bson.objectid import ObjectId
+from datetime import date, datetime
 from pymongo import MongoClient
+from models.usuario import Usuario
 
 app = Flask(__name__)
 cliente = MongoClient('mongodb+srv://cfuemol584:SPgHlmWg5fG2eOgR@flaskmongodb.haghvj1.mongodb.net/?tls=true')
 app.db = cliente.Tienda_Gestion
 
-productos = [producto for producto in app.db.productos.find({})]
-print(type(productos))
-clientes = [cliente for cliente in app.db.clientes.find({})]
+productos_col = app.db['productos']
+usuarios_col = app.db['clientes']
+pedidos_col = app.db['pedidos']
+
+### Arreglar clientes, que tengan los campos necesarios ###
 
         #### END-POINTS ####
 
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
-    admin = {
-        'nombre_admin' : 'Francisco',
-        'tienda' : 'TecnoMarket',
-        'fecha' : date.today()
+
+    admin ={
+        'nombre_admin': 'Cristóbal',
+        'tienda': 'TecnoMarket',
+        'fecha': date.today()
     }
 
-    pedidos_clientes = [
-        # Pedidos de Ana
-        {'cliente': 'Ana', 'total': 112.97, 'fecha': '2024-12-22'},
-        {'cliente': 'Ana', 'total': 212.97, 'fecha': '2024-12-20'},
-        {'cliente': 'Ana', 'total': 133.12, 'fecha': '2024-12-27'},
-        {'cliente': 'Ana', 'total': 192.87, 'fecha': '2024-12-30'},
-        {'cliente': 'Ana', 'total': 212.11, 'fecha': '2025-01-04'},
-        {'cliente': 'Ana', 'total': 234.22, 'fecha': '2025-01-08'},
-        {'cliente': 'Ana', 'total': 322.97, 'fecha': '2025-01-22'},
-        {'cliente': 'Ana', 'total': 92.22, 'fecha': '2025-01-31'},
-        {'cliente': 'Ana', 'total': 12.97, 'fecha': '2025-02-12'},
-        {'cliente': 'Ana', 'total': 11.17, 'fecha': '2025-02-22'},
-        {'cliente': 'Ana', 'total': 442.35, 'fecha': '2025-03-04'},
-        {'cliente': 'Ana', 'total': 112.97, 'fecha': '2025-04-12'},
+    productos = list(productos_col.find())
+    clientes = list(usuarios_col.find())
+    pedidos = list(pedidos_col.find())
 
-        # Pedidos de Luis
-        {'cliente': 'Luis', 'total': 92.97, 'fecha': '2024-12-22'},
-        {'cliente': 'Luis', 'total': 192.97, 'fecha': '2024-12-26'},
-        {'cliente': 'Luis', 'total': 79.97, 'fecha': '2024-12-31'},
-
-        # Pedidos de Carmen
-        {'cliente': 'Carmen', 'total': 32.97, 'fecha': '2024-12-02'},
-        {'cliente': 'Carmen', 'total': 43.97, 'fecha': '2024-12-20'},
-        {'cliente': 'Carmen', 'total': 45.00, 'fecha': '2024-12-26'},
-        {'cliente': 'Carmen', 'total': 132.97, 'fecha': '2024-12-31'},
-        {'cliente': 'Carmen', 'total': 177.88, 'fecha': '2025-02-12'},
-        {'cliente': 'Carmen', 'total': 199.99, 'fecha': '2025-04-22'},
-        {'cliente': 'Carmen', 'total': 149.99, 'fecha': '2025-05-01'},
-
-        # Pedidos de Pedro
-        {'cliente': 'Pedro', 'total': 88.33, 'fecha': '2024-07-22'},
-        {'cliente': 'Pedro', 'total': 127.25, 'fecha': '2024-08-12'},
-        {'cliente': 'Pedro', 'total': 223.39, 'fecha': '2024-09-19'},
-        {'cliente': 'Pedro', 'total': 57.75, 'fecha': '2024-10-22'},
-        {'cliente': 'Pedro', 'total': 79.95, 'fecha': '2024-11-04'},
-        {'cliente': 'Pedro', 'total': 83.27, 'fecha': '2024-12-29'},
-        {'cliente': 'Pedro', 'total': 295.95, 'fecha': '2025-01-11'},
-        {'cliente': 'Pedro', 'total': 7.95, 'fecha': '2025-02-25'},
-        {'cliente': 'Pedro', 'total': 499.95, 'fecha': '2025-03-09'},
-        {'cliente': 'Pedro', 'total': 29.95, 'fecha': '2025-04-30'}
-
-    ]
+    print()
+    print(productos)
+    print()
 
     # Calcular ingresos totales por ventas
     ingresos = 0.0
 
-    for pedido in pedidos_clientes:
+    for pedido in pedidos:
         ingresos += pedido['total']
 
     # Calcular total de productos en stock
-    total_productos = 0
+    total_stock = 0
 
     for producto in productos:
-        total_productos += producto['stock']
+        print(producto)
+        print()
+        total_stock += producto['stock']
 
     # Calcular clientes activos y Mostrar el cliente con más pedidos
 
@@ -92,22 +64,9 @@ def dashboard():
             mas_pedidos['nombre'] = cliente['nombre']
             mas_pedidos['cantidad'] = cliente['pedidos']
 
-    # Añadir datos del formulario a la lista de productos de la tienda
-
-            add_client = {}
-
-            client = dict(request.form)
-            add_client['nombre'] = client['nombre_cliente'].title()
-            add_client['email'] = client['email_cliente'].lower()
-            add_client['estado'] = False
-            add_client['pedidos'] = 0
-
-            clientes.append(add_client)
-            app.db.clientes.insert_one(add_client)
-
     return render_template('dashboard.html', **admin,
-                           productos=productos, clientes=clientes, pedidos_clientes=pedidos_clientes,
-                           ingresos=ingresos, total_productos=total_productos,
+                           productos=productos, clientes=clientes, pedidos_clientes=pedidos,
+                           ingresos=ingresos, total_productos=total_stock,
                            active=active, mas_pedidos=mas_pedidos)
 
 @app.route('/add_producto', methods=['GET', 'POST'])
@@ -134,26 +93,37 @@ def add_producto():
 
 @app.route('/lista_productos', methods=['GET', 'POST'])
 def lista_productos():
+    productos = list(productos_col.find())
     return render_template('lista_productos.html', lista_productos=productos)
 
-@app.route('/lista_productos/<string:id_producto>', methods=['GET', 'POST'])
-def producto(id_producto):
-    product_found = None
-    id_producto = id_producto.title()
+@app.route('/productos/<id_producto>', methods=['GET', 'POST'])
+def detalle_producto(id_producto):
+    producto = productos_col.find_one({"_id": ObjectId(id_producto)})
+    if producto:
+        return render_template('detalle_producto.html', producto=producto)
+    return render_template('404.html')
 
-    for buscar in productos:
-        print(buscar['nombre'])
-        print(producto)
-        if buscar['nombre'] == id_producto:
-            product_found = id_producto
-            break
+@app.route('/registro-usuario', methods=['GET', 'POST'])
+def registro_usuario():
+    mensaje_user = ''
 
-    print(product_found)
+    if request.method == 'POST':
+        nombre_user = request.form['nombre_user'].title()
+        email_user = request.form['email_user'].lower()
+        fecha = datetime.today()
+        passw_user = request.form['passw_user']
 
-    if product_found:
-        return render_template('detalle_producto.html', id_producto=product_found)
-    else:
-        return render_template('404.html')
+        fecha_user = fecha.strftime('%d/%m/%Y')
+
+        usuario = Usuario(nombre_user, email_user, passw_user, fecha_user)
+
+        app.db.clientes.insert_one(usuario.__dict__) # Convierte el objeto a dict para meterlo en MongoDB
+
+        mensaje_user = f'El usuario {nombre_user} ha sido añadido correctamente.'
+
+    return render_template('registro_usuario.html', mensaje_user=mensaje_user)
+
+
 
 ## Crear los endpoints a la misma vez que las webs
 # correspondientes y en el nav##

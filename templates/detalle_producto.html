@@ -1,11 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    {{ id_producto.nombre }}
-lasdhjklahskjd
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %} Flask - Detalle de {{ producto.nombre }} {% endblock %}
+
+{% block content %}
+    <div class="title">
+        Detalle de {{ producto.nombre }}
+    </div>
+
+    <div>
+            <table>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Categoría</th>
+                    <th>Stock</th>
+                </tr>
+
+                <tr>
+                    <td>{{ producto.nombre }}</td>
+                        <td>{{ producto.precio }} €</td>
+                        <td>{{ producto.categoria }}</td>
+                        <td>
+                            {% if producto.stock > 0 %}
+                                {{ producto.stock }}
+                            {% else %}
+                                <span class="stock">Sá gastao</span>
+                            {% endif %}
+                        </td>
+                </tr>
+            </table>
+    </div>
+{% endblock %}

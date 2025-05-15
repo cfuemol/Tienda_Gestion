@@ -1,10 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %} Flask - Add Clientes {% endblock %}
 
-</body>
-</html>
+{% block content %}
+    <div>Formulario para añadir clientes</div>
+
+    {% if mensaje_user %}
+        <div class="mensaje">
+            {{ mensaje_user }}
+        </div>
+    {% endif %}
+
+    <div>
+        <form class="add_clientes" method="POST">
+            <table>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Contraseña</th>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="nombre_user" class="form_label"></label>
+                        <input type="text" name="nombre_user" id="nombre_user" required>
+                    </td>
+
+                    <td>
+                        <label for="email_user" class="form_label"></label>
+                        <input type="email" name="email_user" id="email_user" required>
+                    </td>
+
+                    <td>
+                        <label for="passw_user" class="form_label"></label>
+                        <input type="password" name="passw_user" id="passw_user" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="3">
+                        <button type="submit" class="form_submit">Enviar</button>
+                    </td>
+
+                </tr>
+
+            </table>
+        </form>
+    </div>
+{% endblock %}

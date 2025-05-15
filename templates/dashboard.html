@@ -49,16 +49,16 @@
 
                 {% for cliente in clientes %}
                     <tr>
-                        <td>{{ cliente['nombre'] }}</td>
-                        <td>{{ cliente['email'] }}</td>
+                        <td>{{ cliente.nombre }}</td>
+                        <td>{{ cliente.email }}</td>
                         <td>
-                            {% if cliente['activo'] %}
+                            {% if cliente.activo %}
                                 Activo
                             {% else %}
                                 <span class="stock">Inactivo</span>
                             {% endif %}
                         </td>
-                        <td>{{ cliente['pedidos'] }}</td>
+                        <td>{{ cliente.pedidos }}</td>
                     </tr>
                 {% endfor %}
 
