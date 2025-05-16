@@ -52,10 +52,10 @@
                         <td>{{ cliente.nombre }}</td>
                         <td>{{ cliente.email }}</td>
                         <td>
-                            {% if cliente.activo %}
-                                Activo
+                            {% if cliente.activo == 'Inactivo' %}
+                                <span class="stock">{{ cliente.activo }}</span>
                             {% else %}
-                                <span class="stock">Inactivo</span>
+                                {{ cliente.activo }}
                             {% endif %}
                         </td>
                         <td>{{ cliente.pedidos }}</td>
@@ -101,58 +101,5 @@
 
         </p>
 
-        <p>
-
-            <h2>Introducir nuevos clientes a la tienda:</h2>
-
-            <ul>
-                <li>Añadir un cliente nuevo
-                    <a href="#modal_addclient" class="addclient"> Agregar Cliente</a>
-                </li>
-            </ul>
-
-
-
-                <!-- Modal para introducir clientes -->
-
-                <div id="modal_addclient" class="modalDialog">
-                    <div>
-                        <a href="#" class="close">X</a>
-                        <h2>Agregar clientes</h2>
-                        <form class="add_clientes" method="POST">
-                        <input type="hidden" name="form_type" value="cliente">
-                        <table>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Email</th>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <label for="nombre_cliente" class="form_label"></label>
-                                    <input type="text" name="nombre_cliente" id="nombre_cliente">
-                                </td>
-
-                                <td>
-                                    <label for="email_cliente" class="form_label"></label>
-                                    <input type="email" name="email_cliente" id="email_cliente">
-                                </td>
-
-                            </tr>
-
-                            <tr>
-                                <td colspan="2">
-                                    <button type="submit" class="form_submit">Enviar</button>
-                                </td>
-                            </tr>
-
-                            </table>
-                        </form>
-                    </div>
-                </div>
-
-            </div>
-
-        </p>
 {% endblock %}
 

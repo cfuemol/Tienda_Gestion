@@ -7,29 +7,41 @@
 
 </head>
 <body>
-    <header>
-        <h1>Práctica Final con Flask</h1>
+    <div class="wrapper">
 
-            <nav>
-                <a href="{{ url_for('dashboard') }}">Dashboard</a>
-                <a href="{{ url_for('add_producto') }}">Añadir Producto</a>
-                <a href="{{ url_for('lista_productos') }}">Lista de Productos</a>
-                <a href="{{ url_for('registro_usuario') }}">Registro de Usuario</a>
-                <a href="">Lista de Usuarios</a>
+        <!-- Título de la página -->
+        <div class="title">
+            Práctica Final con Flask
+        </div>
+
+        <!-- Barra de navegación -->
+            <nav class="navbar">
+                <div class="link_nav"><a href="{{ url_for('dashboard') }}">Dashboard</a></div>
+                <div class="link_nav"><a href="{{ url_for('add_producto') }}">Añadir Producto</a></div>
+                <div class="link_nav"><a href="{{ url_for('lista_productos') }}">Lista de Productos</a></div>
+                <div class="link_nav"><a href="{{ url_for('registro_usuario') }}">Registro de Usuario</a></div>
+                <div class="link_nav"><a href="{{ url_for('lista_usuario') }}">Lista de Usuarios</a></div>
             </nav>
 
-    </header>
+        <!-- Contenido de la página -->
+        <div class="contenido">
+            {% block content %}
+                Contenido por defecto
+            {% endblock %}
+        </div>
+    </div>
 
-    <main>
-        {% block content %}
-            Contenido por defecto
-        {% endblock %}
-    </main>
+    <!-- Footer -->
 
     <footer>
-        <p>
+        <div class="ondas">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+        <div>
             &copy 2025 - Cristóbal Fuentes. - Todos los derechos reservados
-        </p>
+        </div>
     </footer>
 
 </body>

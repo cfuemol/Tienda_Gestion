@@ -1,10 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %} Flask - List Users {% endblock %}
 
-</body>
-</html>
+{% block content %}
+    <div class="title">
+        Listado de clientes registrados
+    </div>
+
+    <div>
+        <table>
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Estado</th>
+                <th>Fecha Registro</th>
+                <th>Número Pedidos</th>
+            </tr>
+
+            {% for cliente in lista_clientes %}
+                <tr>
+                    <td>{{ cliente.nombre }}</td>
+                    <td>{{ cliente.email }} €</td>
+                    <td>
+                        {% if cliente.activo == 'Inactivo' %}
+                                <span class="stock">{{ cliente.activo }}</span>
+                            {% else %}
+                                {{ cliente.activo }}
+                            {% endif %}
+                    </td>
+                    <td>{{ cliente.fecha }}</td>
+                    <td>
+                        {% if cliente.pedidos > 0 %}
+                                {{ cliente.pedidos }}
+                            {% else %}
+                                <span class="stock">{{ cliente.pedidos }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

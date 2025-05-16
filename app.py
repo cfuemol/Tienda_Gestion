@@ -1,3 +1,5 @@
+from cgitb import handler
+
 from flask import Flask, render_template, request
 from bson.objectid import ObjectId
 from datetime import date, datetime
@@ -29,9 +31,6 @@ def dashboard():
     clientes = list(usuarios_col.find())
     pedidos = list(pedidos_col.find())
 
-    print()
-    print(productos)
-    print()
 
     # Calcular ingresos totales por ventas
     ingresos = 0.0
@@ -43,8 +42,6 @@ def dashboard():
     total_stock = 0
 
     for producto in productos:
-        print(producto)
-        print()
         total_stock += producto['stock']
 
     # Calcular clientes activos y Mostrar el cliente con más pedidos
@@ -57,7 +54,7 @@ def dashboard():
     }
 
     for cliente in clientes:
-        if cliente['estado']:
+        if cliente['activo']:
             active +=1
 
         if cliente['pedidos'] > mas_pedidos['cantidad']:
@@ -101,7 +98,6 @@ def detalle_producto(id_producto):
     producto = productos_col.find_one({"_id": ObjectId(id_producto)})
     if producto:
         return render_template('detalle_producto.html', producto=producto)
-    return render_template('404.html')
 
 @app.route('/registro-usuario', methods=['GET', 'POST'])
 def registro_usuario():
@@ -111,11 +107,12 @@ def registro_usuario():
         nombre_user = request.form['nombre_user'].title()
         email_user = request.form['email_user'].lower()
         fecha = datetime.today()
+        activo_user = request.form['activo_user']
         passw_user = request.form['passw_user']
 
         fecha_user = fecha.strftime('%d/%m/%Y')
 
-        usuario = Usuario(nombre_user, email_user, passw_user, fecha_user)
+        usuario = Usuario(nombre_user, email_user, passw_user, activo_user,fecha_user)
 
         app.db.clientes.insert_one(usuario.__dict__) # Convierte el objeto a dict para meterlo en MongoDB
 
@@ -123,8 +120,18 @@ def registro_usuario():
 
     return render_template('registro_usuario.html', mensaje_user=mensaje_user)
 
+@app.route('/lista_usuario', methods=['GET', 'POST'])
+def lista_usuario():
+    clientes = list(usuarios_col.find())
+    return render_template('lista_usuarios.html', lista_clientes=clientes)
 
+@app.errorhandler(404)
+def not_found(e):
+    return render_template('404.html', mensaje='Página no encontrada.')
 
+@app.errorhandler(500)
+def not_found(e):
+    return render_template('404.html', mensaje='Error en el servidor')
 ## Crear los endpoints a la misma vez que las webs
 # correspondientes y en el nav##
 

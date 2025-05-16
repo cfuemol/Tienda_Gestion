@@ -2,7 +2,9 @@
 {% block title %} Flask - Add Clientes {% endblock %}
 
 {% block content %}
-    <div>Formulario para añadir clientes</div>
+    <div class="title">
+        Formulario para añadir clientes
+    </div>
 
     {% if mensaje_user %}
         <div class="mensaje">
@@ -17,6 +19,7 @@
                     <th>Nombre</th>
                     <th>Email</th>
                     <th>Contraseña</th>
+                    <th>Activo</th>
                 </tr>
 
                 <tr>
@@ -34,10 +37,18 @@
                         <label for="passw_user" class="form_label"></label>
                         <input type="password" name="passw_user" id="passw_user" required>
                     </td>
+
+                    <td>
+                        <input type="radio" name="activo_user" id="activo" value="Activo" checked>
+                        <label for="activo">Activo</label>
+
+                        <input type="radio" name="activo_user" id="inactivo" value="Inactivo">
+                        <label for="inactivo">Inactivo</label>
+                    </td>
                 </tr>
 
                 <tr>
-                    <td colspan="3">
+                    <td colspan="4">
                         <button type="submit" class="form_submit">Enviar</button>
                     </td>
 
