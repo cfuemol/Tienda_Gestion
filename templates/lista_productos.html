@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 {% block title %} Flask - List Products {% endblock %}
 
-{% block content %}
+{% block title_pag %}
     <div class="title">
         Catálogo de productos registrados
     </div>
+{% endblock %}
 
-    <div>
+{% block content %}
+    <div class="section">
         <table>
             <tr>
                 <th>Producto</th>
@@ -25,11 +27,11 @@
                         {% if producto.stock > 0 %}
                             {{ producto.stock }}
                         {% else %}
-                            <span class="stock">Sá gastao</span>
+                            <span class="stock">Agotado</span>
                         {% endif %}
                     </td>
                     <td>
-                        <a href="{{ url_for('detalle_producto', id_producto=producto._id) }}">
+                        <a href="{{ url_for('detalle_producto', id_producto=producto._id) }}" class="detalle_producto">
                             Ver más
                         </a>
                     </td>

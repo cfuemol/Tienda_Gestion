@@ -1,105 +1,108 @@
 {% extends 'base.html' %}
 {% block title %} Flask - Dashboard {% endblock %}
 
+{% block title_pag %}
+    <div class="title">
+        Panel de control {{ tienda }}
+    </div>
+{% endblock %}
 
 {% block content %}
 
-        <p>Bienvenido al panel de control de la tienda {{ tienda }}</p>
-        <p>{{ nombre_admin }}, la fecha de hoy es: {{ fecha }}</p>
+    <div class="intro_dashboard">
+            Hola de nuevo {{ nombre_admin }}, la fecha de hoy es: {{ fecha }}
+    </div>
 
+    <div class="section">
+        <!-- Mostrar productos -->
+        <p>Catálogo de productos registrados en tienda</p>
+        <table>
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Categoría</th>
+                <th>Stock</th>
+            </tr>
 
-        <h3><u>Catálogo de productos registrados en tienda:</u></h3>
-            <table>
+            {% for producto in productos %}
                 <tr>
-                    <th>Producto</th>
-                    <th>Precio</th>
-                    <th>Categoría</th>
-                    <th>Stock</th>
+                    <td>{{ producto.nombre }}</td>
+                    <td>{{ producto.precio }} €</td>
+                    <td>{{ producto.categoria }}</td>
+                    <td>
+                        {% if producto.stock > 0 %}
+                            {{ producto.stock }}
+                        {% else %}
+                            <span class="stock">Agotado</span>
+                        {% endif %}
+                    </td>
                 </tr>
-
-                {% for producto in productos %}
-                    <tr>
-                        <td>{{ producto.nombre }}</td>
-                        <td>{{ producto.precio }} €</td>
-                        <td>{{ producto.categoria }}</td>
-                        <td>
-                            {% if producto.stock > 0 %}
-                                {{ producto.stock }}
-                            {% else %}
-                                <span class="stock">Sá gastao</span>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-            </table>
-
-            <h4>Hay un total de {{ total_productos }} artículos en stock</h4>
-
-
-        <p>
-            <h3><u>Lista de clientes registrados en el sistema:</u></h3>
-
-            <table>
+            {% endfor %}
                 <tr>
-                    <th>Nombre</th>
-                    <th>Email</th>
-                    <th>Estado</th>
-                    <th>Número de Pedidos</th>
+                    <th colspan="3">Productos que hay en stock</th>
+                    <th>{{ total_productos }}</th>
                 </tr>
+        </table>
 
-                {% for cliente in clientes %}
-                    <tr>
-                        <td>{{ cliente.nombre }}</td>
-                        <td>{{ cliente.email }}</td>
-                        <td>
-                            {% if cliente.activo == 'Inactivo' %}
-                                <span class="stock">{{ cliente.activo }}</span>
-                            {% else %}
-                                {{ cliente.activo }}
-                            {% endif %}
-                        </td>
-                        <td>{{ cliente.pedidos }}</td>
-                    </tr>
-                {% endfor %}
+        <!-- Mostrar clientes -->
+        <p>Lista de clientes registrados en el sistema</p>
+        <table>
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Estado</th>
+                <th>Número de Pedidos</th>
+            </tr>
 
-                    <tr class="resalto">
-                        <td colspan="4">Ahora hay {{ active }} usuarios conectados</td>
-                    </tr>
-
-                    <tr class="resalto">
-                        <td colspan="4">Cliente con más compras: {{ mas_pedidos['nombre'] }} con {{ mas_pedidos['cantidad'] }} productos</td>
-                    </tr>
-            </table>
-
-            <h4>El cliente con más pedidos es --&gt;  {{ mas_pedidos['nombre'] }} con {{ mas_pedidos['cantidad'] }} pedidos realizados
-            hasta la fecha</h4>
-        </p>
-
-        <p>
-            <h3><u>Pedidos recientes:</u></h3>
-
-            <table>
+            {% for cliente in clientes %}
                 <tr>
-                    <th>Cliente</th>
-                    <th>Total</th>
-                    <th>Fecha</th>
-                </tr>
+                    <td>{{ cliente.nombre }}</td>
+                    <td>{{ cliente.email }}</td>
+                    <td>
+                        {% if cliente.activo == 'Inactivo' %}
+                            <span class="stock">{{ cliente.activo }}</span>
+                        {% else %}
+                            {{ cliente.activo }}
+                        {% endif %}
+                    </td>
 
-                {% for pedido in pedidos_clientes %}
-                    <tr>
-                        <td>{{ pedido['cliente'] }}</td>
-                        <td>{{ pedido['total'] }} €</td>
-                        <td>{{ pedido['fecha'] }}</td>
-                    </tr>
+                    <td>{{ cliente.pedidos }}</td>
+                </tr>
                 {% endfor %}
 
-                    <tr>
-                        <td class="resalto">Total Ganado</td>
-                        <td colspan="3" class="resalto"> {{ ingresos | round(2) }} €</td>
-                    </tr>
-            </table>
+            <tr>
+                <th colspan="4">Ahora hay {{ active }} usuarios conectados</th>
+            </tr>
 
-        </p>
+            <tr>
+                <th colspan="4">Cliente con más pedidos: {{ mas_pedidos['nombre'] }} con {{ mas_pedidos['cantidad'] }} productos</th>
+            </tr>
+
+        </table>
+
+        <!-- Mostrar pedidos -->
+        <p>Lista de pedidos recientes</p>
+        <table>
+            <tr>
+                <th>Cliente</th>
+                <th>Total</th>
+                <th>Fecha</th>
+            </tr>
+
+            {% for pedido in pedidos_clientes %}
+                <tr>
+                    <td>{{ pedido['cliente'] }}</td>
+                    <td>{{ pedido['total'] }} €</td>
+                    <td>{{ pedido['fecha'] }}</td>
+                </tr>
+            {% endfor %}
+
+            <tr>
+                <th>Total Ganado</th>
+                <th colspan="3"> {{ ingresos | round(2) }} €</th>
+            </tr>
+        </table>
+    </div>
 
 {% endblock %}
 

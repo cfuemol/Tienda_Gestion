@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 {% block title %} Flask - List Users {% endblock %}
 
-{% block content %}
+{% block title_pag %}
     <div class="title">
         Listado de clientes registrados
     </div>
+{% endblock %}
 
-    <div>
+{% block content %}
+    <div class="section">
         <table>
             <tr>
                 <th>Nombre</th>

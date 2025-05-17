@@ -145,8 +145,28 @@ footer {
 
 .title{
     margin-top: 2%;
-    margin-bottom: 2%;
-    font-size: 32px;
+    font-size: 2rem;
+    color: goldenrod;
+    text-align: center;
+}
+
+/* Intro dashboard.html */
+
+.intro_dashboard{
+    margin-top: 1%;
+    margin-bottom: 1%;
+    font-size: 1.5rem;
+    color: goldenrod;
+    text-align: center;
+}
+
+/* Contenido de las páginas */
+
+.section{
+    margin-top: 1%;
+    margin-bottom: 1%;
+    font-size: 1.2rem;
+    font-style: italic;
     color: goldenrod;
     text-align: center;
 }
@@ -166,12 +186,9 @@ table{
     width: 70%;
     text-align: center;
     margin: auto;
-    border-radius: 15px;
-}
-
-.resalto{
-    font-weight: bold;
-    background-color: darkgrey;
+    background-color: palegoldenrod;
+    color: black;
+    font-size: 1em;
 }
 
 .stock{
@@ -189,3 +206,52 @@ table{
     border: 1px solid #c3e6cb;
 }
 
+.error{
+    background: lightcoral;
+    color: white;
+    padding: 1em;
+    margin-top: 1em;
+    border: 1px solid #ff7254;
+}
+
+.add_productos input{
+    background-color: lightgoldenrodyellow;
+    text-align: center;
+    font-size: 1em;
+}
+
+.add_clientes input{
+    background-color: lightgoldenrodyellow;
+    text-align: center;
+    font-size: 1em;
+}
+
+.form_submit{
+    background-color: #1a1a1c;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+    border: 1px solid #333;
+    color: white;
+    width: 100%;
+    font-size: 1em;
+}
+
+.form_submit:hover{
+    background-color: goldenrod;
+}
+
+/* Convertir enlaces de detalle_producto a botones */
+.detalle_producto{
+    display: block;
+    width: 100%;
+    text-align: center;
+    background-color: #333;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.detalle_producto:hover{
+    background-color: goldenrod;
+}

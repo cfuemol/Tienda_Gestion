@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 {% block title %} Flask - Add Products {% endblock %}
 
-{% block content %}
+{% block title_pag %}
     <div class="title">
         Formulario para añadir productos
     </div>
+{% endblock %}
+
+{% block content %}
 
     {% if mensaje %}
         <div class="mensaje">
@@ -12,9 +15,9 @@
         </div>
     {% endif %}
 
-    <div>
+    <div class="section">
         <form class="add_productos" method="POST">
-            <table>
+            <table style="width: fit-content">
                 <tr>
                     <th>Nombre</th>
                     <th>Precio</th>
@@ -25,7 +28,7 @@
                 <tr>
                     <td>
                         <label for="nombre" class="form_label"></label>
-                        <input type="text" name="nombre" id="nombre" required>
+                        <input type="text" name="nombre" id="nombre" required size="40">
                     </td>
 
                     <td>
@@ -48,7 +51,6 @@
                     <td colspan="4">
                         <button type="submit" class="form_submit">Enviar</button>
                     </td>
-
                 </tr>
 
             </table>

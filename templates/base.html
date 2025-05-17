@@ -10,9 +10,11 @@
     <div class="wrapper">
 
         <!-- Título de la página -->
-        <div class="title">
-            Práctica Final con Flask
-        </div>
+        {% block title_pag %}
+            <div class="title">
+                Práctica Final con Flask
+            </div>
+        {% endblock %}
 
         <!-- Barra de navegación -->
             <nav class="navbar">

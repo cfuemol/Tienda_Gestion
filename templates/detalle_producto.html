@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 {% block title %} Flask - Detalle de {{ producto.nombre }} {% endblock %}
 
-{% block content %}
+{% block title_pag %}
     <div class="title">
         Detalle de {{ producto.nombre }}
     </div>
+{% endblock %}
 
-    <div>
+{% block content %}
+    <div class="section">
             <table>
                 <tr>
                     <th>Producto</th>
@@ -23,7 +25,7 @@
                             {% if producto.stock > 0 %}
                                 {{ producto.stock }}
                             {% else %}
-                                <span class="stock">Sá gastao</span>
+                                <span class="stock">Agotado</span>
                             {% endif %}
                         </td>
                 </tr>

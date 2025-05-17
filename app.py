@@ -1,5 +1,3 @@
-from cgitb import handler
-
 from flask import Flask, render_template, request
 from bson.objectid import ObjectId
 from datetime import date, datetime
@@ -14,17 +12,19 @@ productos_col = app.db['productos']
 usuarios_col = app.db['clientes']
 pedidos_col = app.db['pedidos']
 
-### Arreglar clientes, que tengan los campos necesarios ###
-
         #### END-POINTS ####
 
+# Muestra dashboard.html
 @app.route('/dashboard', methods=['GET', 'POST'])
 def dashboard():
+    fecha = date.today()
+    fecha_admin = fecha.strftime('%d/%m/%Y')
+
 
     admin ={
         'nombre_admin': 'Cristóbal',
         'tienda': 'TecnoMarket',
-        'fecha': date.today()
+        'fecha': fecha_admin
     }
 
     productos = list(productos_col.find())
@@ -66,6 +66,7 @@ def dashboard():
                            ingresos=ingresos, total_productos=total_stock,
                            active=active, mas_pedidos=mas_pedidos)
 
+# Añadir productos a la BBDD
 @app.route('/add_producto', methods=['GET', 'POST'])
 def add_producto():
     mensaje = ''
@@ -85,20 +86,22 @@ def add_producto():
         })
         mensaje = f'El producto {nombre} ha sido añadido correctamente.'
 
-
     return render_template('add_producto.html', mensaje=mensaje)
 
+# Listado de los productos registrados en la BBDD
 @app.route('/lista_productos', methods=['GET', 'POST'])
 def lista_productos():
     productos = list(productos_col.find())
     return render_template('lista_productos.html', lista_productos=productos)
 
+# Muestra detalle de los productos
 @app.route('/productos/<id_producto>', methods=['GET', 'POST'])
 def detalle_producto(id_producto):
     producto = productos_col.find_one({"_id": ObjectId(id_producto)})
     if producto:
         return render_template('detalle_producto.html', producto=producto)
 
+# Añadir usuarios a la BBDD
 @app.route('/registro-usuario', methods=['GET', 'POST'])
 def registro_usuario():
     mensaje_user = ''
@@ -120,15 +123,18 @@ def registro_usuario():
 
     return render_template('registro_usuario.html', mensaje_user=mensaje_user)
 
+# Listado de los usuarios registrados en la BBDD
 @app.route('/lista_usuario', methods=['GET', 'POST'])
 def lista_usuario():
     clientes = list(usuarios_col.find())
     return render_template('lista_usuarios.html', lista_clientes=clientes)
 
+# Manejador de error 404 - Page not found
 @app.errorhandler(404)
 def not_found(e):
     return render_template('404.html', mensaje='Página no encontrada.')
 
+# Manejador de error 500 - Error en el servidor
 @app.errorhandler(500)
 def not_found(e):
     return render_template('404.html', mensaje='Error en el servidor')
