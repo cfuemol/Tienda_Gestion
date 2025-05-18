@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %} Flask - Add Pedido {% endblock %}
+
+{% block title_pag %}
+    <div class="title">
+        Formulario para añadir pedidos
+    </div>
+{% endblock %}
+
+{% block content %}
+
+    {% if mensaje %}
+        <div class="mensaje">
+            {{ mensaje }}
+        </div>
+    {% endif %}
+
+    <div class="section">
+        <form class="add_pedido" method="POST">
+            <table>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Total</th>
+                </tr>
+
+                <tr>
+                    <td>
+                        <label for="cliente" class="form_label"></label>
+                        <select name="cliente" id="cliente" required>
+                            <option value=""  class="option_value">Seleccione un cliente</option>
+                            {% for cliente in clientes %}
+                                <option value="{{ cliente._id|string }}">{{ cliente.nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+
+                    <td>
+                        <label for="total" class="form_label"></label>
+                        <input type="number" name="total" step="0.01" id="total" value="0" required>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" class="form_submit">Enviar</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+{% endblock %}

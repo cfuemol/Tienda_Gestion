@@ -9,6 +9,13 @@
 
 {% block content %}
     <div class="section">
+        {% if mensaje %}
+            <div class="mensaje">
+                {{ mensaje }}
+            </div>
+        {% endif %}
+        <!-- Formulario para modificar -->
+        <form class="detalle" method="POST" action="{{ url_for('editar_producto', id_producto=producto._id) }}">
             <table>
                 <tr>
                     <th>Producto</th>
@@ -16,19 +23,35 @@
                     <th>Categoría</th>
                     <th>Stock</th>
                 </tr>
-
                 <tr>
-                    <td>{{ producto.nombre }}</td>
-                        <td>{{ producto.precio }} €</td>
-                        <td>{{ producto.categoria }}</td>
-                        <td>
-                            {% if producto.stock > 0 %}
-                                {{ producto.stock }}
-                            {% else %}
-                                <span class="stock">Agotado</span>
-                            {% endif %}
-                        </td>
+                    <td>
+                        <label for="nombre" class="form_label"></label>
+                        <input type="text" name="nombre" id="nombre" value="{{ producto.nombre }}" required size="30">
+                    </td>
+                    <td>
+                        <label for="precio" class="form_label"></label>
+                        <input type="number" name="precio" id="precio" step="0.01" value="{{ producto.precio }}" required>
+                    </td>
+                    <td>
+                        <label for="categoria" class="form_label"></label>
+                        <input type="text" name="categoria" id="categoria" value="{{ producto.categoria }}" required>
+                    </td>
+                    <td>
+                        <label for="stock" class="form_label"></label>
+                        <input type="number" name="stock" id="stock" value="{{ producto.stock }}" required min="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <button type="submit" class="edit_submit">Guardar cambios</button>
+                    </td>
                 </tr>
             </table>
+        </form>
+
+        <!-- Formulario para borrar -->
+        <form method="POST" action="{{ url_for('borrar_producto', id_producto=producto._id) }}" style="margin-top:20px;" onsubmit="return confirm('¿Estás seguro que quieres borrar este producto?');">
+            <button type="submit" class="delete_submit delete_btn">Borrar producto</button>
+        </form>
     </div>
 {% endblock %}

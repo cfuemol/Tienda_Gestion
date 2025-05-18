@@ -196,6 +196,57 @@ table{
     color: red;
 }
 
+/* Estilos para añadir pedidos */
+
+select{
+    font-size: 1em;
+}
+
+.add_pedido input{
+    background-color: lightgoldenrodyellow;
+    text-align: center;
+    font-size: 1em;
+}
+
+/* Estilos para detalle de productos*/
+
+.detalle input{
+    background-color: lightgoldenrodyellow;
+    text-align: center;
+    font-size: 1em;
+}
+
+/* Modificar botón editar y borrar producto */
+.edit_submit{
+    background-color: #1a1a1c;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+    border: 1px solid #333;
+    color: white;
+    width: 100%;
+    font-size: 1em;
+}
+
+.edit_submit:hover{
+    background-color: green;
+}
+
+.delete_submit{
+    background-color: #1a1a1c;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: background 0.3s ease;
+    border: 1px solid #333;
+    color: white;
+    width: 100%;
+    font-size: 1em;
+}
+
+.delete_submit:hover{
+    background-color: red;
+}
+
 /* Estilos para añadir productos y clientes */
 
 .mensaje{
