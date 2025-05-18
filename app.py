@@ -1,16 +1,16 @@
 from flask import Flask, render_template, request
 from bson.objectid import ObjectId
 from datetime import date, datetime
-from pymongo import MongoClient
 from models.usuario import Usuario
+from models.database import BaseDatos
 
 app = Flask(__name__)
-cliente = MongoClient('mongodb+srv://cfuemol584:SPgHlmWg5fG2eOgR@flaskmongodb.haghvj1.mongodb.net/?tls=true')
-app.db = cliente.Tienda_Gestion
 
-productos_col = app.db['productos']
-usuarios_col = app.db['clientes']
-pedidos_col = app.db['pedidos']
+bd = BaseDatos()
+
+productos_col = bd.obtener_colecciones('productos')
+usuarios_col = bd.obtener_colecciones('clientes')
+pedidos_col = bd.obtener_colecciones('pedidos')
 
         #### END-POINTS ####
 
@@ -78,7 +78,7 @@ def add_producto():
         categoria = request.form['categoria'].title()
         stock = int(request.form['stock'])
 
-        app.db.productos.insert_one({
+        productos_col.insert_one({
             'nombre': nombre,
             'precio': precio,
             'categoria': categoria,
@@ -117,7 +117,7 @@ def registro_usuario():
 
         usuario = Usuario(nombre_user, email_user, passw_user, activo_user,fecha_user)
 
-        app.db.clientes.insert_one(usuario.__dict__) # Convierte el objeto a dict para meterlo en MongoDB
+        usuarios_col.insert_one(usuario.__dict__) # Convierte el objeto a dict para meterlo en MongoDB
 
         mensaje_user = f'El usuario {nombre_user} ha sido añadido correctamente.'
 
